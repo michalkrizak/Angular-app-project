@@ -1,6 +1,9 @@
+
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {Router} from '@angular/router';
+
+import { Router, RouterOutlet } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-root',
@@ -9,7 +12,21 @@ import {Router} from '@angular/router';
   imports: [RouterOutlet], // Import RouterOutlet sem
   standalone: true, // Potvrď, že komponenta je standalone
 })
-export class AppComponent {
-  title = 'my-angular-app';
-}
 
+export class AppComponent {
+
+  title = 'my-angular-app';
+
+
+
+  constructor(private router: Router) {}
+
+
+
+  navigateToSecondPage() {
+
+    this.router.navigate(['/second-page']);
+
+  }
+
+}
