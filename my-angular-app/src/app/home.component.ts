@@ -19,4 +19,8 @@ export class HomeComponent {
   navigateToSecondPage() {
     this.router.navigate(['/second-page']);
   }
+
+  navigateToProduct() {
+    this.router.navigate(['/products']);
+  }
 }
