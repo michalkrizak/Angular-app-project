@@ -3,8 +3,10 @@
     <div *ngIf="products.length === 0">Loading...</div>
     <div *ngIf="products.length > 0" class="product-list">
       <div *ngFor="let product of products" class="product-item">
-        <div class="product-title">
+          <div class="product-title">
+                <a [routerLink]="['/product', product.id]" class="product-title">
           <h2>{{ product.title }}</h2>
+          </a>
         </div>
         <div class="product-image">
           <img [src]="product.image" alt="{{ product.title }}" />
@@ -13,7 +15,8 @@
           <p>{{ product.description }}</p>
           <p><strong>Price:</strong> ${{ product.price }}</p>
         </div>
+        
       </div>
     </div>
-  </div>s
+  </div>
   

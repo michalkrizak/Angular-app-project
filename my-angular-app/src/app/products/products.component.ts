@@ -3,6 +3,7 @@ import { FakeStoreService } from '../services/fake-store.service';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
+import { RouterModule } from '@angular/router';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
 })
 export class ProductsComponent implements OnInit {
   products: any[] = [];
