@@ -12,4 +12,5 @@ export const routes: Routes = [
   { path: 'second-page', component: SecondPageComponent }, // Druhá stránka
   { path: 'products', component: ProductsComponent } ,
   { path: 'product/:id', component: ProductDetailComponent }, // Detail produktu
+  { path: '**', component: HomeComponent },
 ];

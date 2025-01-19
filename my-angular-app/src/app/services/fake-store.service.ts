@@ -2,6 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface IProduct {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,13 +25,13 @@ export class FakeStoreService {
   constructor(private http: HttpClient) {}
 
   // Metoda pro získání všech produktů
-  getAllProducts(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/products`);
+  getAllProducts$(): Observable<IProduct[]> {
+    return this.http.get<IProduct[]>(`${this.apiUrl}/products`);
   }
 
   // Metoda pro získání jednoho produktu podle ID
   getProductById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/products/${id}`);
+    return this.http.get(`${this.apiUrl}/products/${id}`);
   }
 
   // Metoda pro získání všech uživatelů

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FakeStoreService } from '../services/fake-store.service';
+import { FakeStoreService, IProduct } from '../services/fake-store.service';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { RouterModule } from '@angular/router';
+import { ProductComponent } from "./product/product.component";
 
 
 @Injectable({
@@ -15,17 +16,18 @@ import { RouterModule } from '@angular/router';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ProductComponent],
 })
 export class ProductsComponent implements OnInit {
-  products: any[] = [];
+  products: IProduct[] = [];
 
   constructor(private fakeStoreService: FakeStoreService) {}
 
   ngOnInit(): void {
     // Načtení všech produktů při inicializaci komponenty
-    this.fakeStoreService.getAllProducts().subscribe({
+    this.fakeStoreService.getAllProducts$().subscribe({
       next: (data) => {
+        //console.log(data[0].); // Debug: Zobrazení dat v konzoli
         this.products = data;
         console.log(data); // Debug: Zobrazení dat v konzoli
       },

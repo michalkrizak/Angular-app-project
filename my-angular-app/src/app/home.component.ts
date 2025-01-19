@@ -19,9 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 export class HomeComponent {
 
-  title = 'my-angular-app';
-  username = '';
-  password = '';
+  username : string = '';
+  password : string = '';
   loggedInUser: any = null;
   errorMessage = '';
 

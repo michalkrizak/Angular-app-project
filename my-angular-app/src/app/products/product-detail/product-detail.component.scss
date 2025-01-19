@@ -1,22 +1,57 @@
 .product-detail {
-    text-align: center;
-  
-    img {
-      max-width: 300px;
-      margin: 20px 0;
-    }
-  
-    button {
-      background-color: #28a745;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-  
-      &:hover {
-        background-color: #218838;
-      }
+  text-align: center;
+
+  img {
+    width: 250px;
+    height: auto;
+    margin: 20px 0;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .image {
+    display: grid;
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .description {
+    display: grid;
+    flex-grow: 1; /* Zajistí, že popis vyplní dostupný prostor */
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    word-wrap: break-word;
+    max-width: 400px;
+  }
+
+  button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #218838;
     }
   }
-  
+
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .description {
+      max-width: 90%;
+    }
+  }
+}
