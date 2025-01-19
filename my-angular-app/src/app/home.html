@@ -1,16 +1,23 @@
-<h1>Vítej v mé první Angular aplikaci!</h1>
-<p>Angular je super!</p>
+<div class="center"> 
+<div  class="frame"> 
 
-<!-- app.component.html -->
-<div class="container1">
-  <button class="navigate-button" (click)="navigateToSecondPage()">
-    hmmmmmmmmmmm
-  </button>
-  <button class="navigate-button" (click)="navigateToProduct()">
-    produktíky
-  </button>
-</div>
-<router-outlet></router-outlet>
+  <div *ngIf="loggedInUser; else loginForm">
+    <p>Přihlášen jako: {{ loggedInUser?.username }}</p>
+    <button (click)="logout()">Odhlásit</button>
+    <button (click)="navigateToProduct()">Produkty</button>
+  </div>
 
+  <ng-template #loginForm class="form">
+    <div>
+    <form (ngSubmit)="login()" class="register-form">
+      <label for="username">Uživatelské jméno:</label>
+      <input type="text" id="username" [(ngModel)]="username" name="username" required />
 
+      <label for="password">Heslo:</label>
+      <input type="password" id="password" [(ngModel)]="password" name="password" required />
 
+      <button type="submit">Přihlásit</button>
+    </form>
+    <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p></div>
+  </ng-template>
+</div></div>

@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
-
 import { Router, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -9,7 +9,7 @@ import { Router, RouterOutlet } from '@angular/router';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  imports: [RouterOutlet], // Import RouterOutlet sem
+  imports: [RouterOutlet, RouterModule], // Import RouterOutlet sem
   standalone: true, // Potvrď, že komponenta je standalone
 })
 
@@ -20,8 +20,6 @@ export class AppComponent {
 
 
   constructor(private router: Router) {}
-
-
 
   navigateToSecondPage() {
 

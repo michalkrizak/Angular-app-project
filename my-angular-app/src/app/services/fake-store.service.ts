@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FakeStoreService {
   private apiUrl = 'https://fakestoreapi.com';
+  private loggedInUser: any = null;
 
   constructor(private http: HttpClient) {}
 
@@ -26,8 +27,27 @@ export class FakeStoreService {
   }
 
   // Metoda pro přihlášení
-  login(username: string, password: string): Observable<any> {
-    const body = { username, password };
-    return this.http.post<any>(`${this.apiUrl}/auth/login`, body);
+  // Přihlášení uživatele
+  login(username: string, password: string): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.getAllUsers().subscribe((users) => {
+        const user = users.find((u) => u.username === username && u.password === password || u.email === username && u.password === password);
+        if (user) {
+          this.loggedInUser = user;
+          observer.next(true);
+        } else {
+          observer.next(false);
+        }
+        observer.complete();
+      });
+    });
+  }
+
+  getLoggedInUser(): any {
+    return this.loggedInUser;
+  }
+
+  logout(): void {
+    this.loggedInUser = null;
   }
 }
