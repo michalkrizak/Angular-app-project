@@ -1,6 +1,10 @@
 <div class="products">
+  <button mat-raised-button color="primary">Klikni mě</button>
+
     <h1>Products</h1>
-    <div *ngIf="products.length === 0">Loading...</div>
+<div class="center">
+    <mat-spinner *ngIf="products.length === 0" [diameter]="50"></mat-spinner>
+</div>
     <div *ngIf="products.length > 0" class="product-list">
       <div *ngFor="let product of products" class="product-item">
         <michal-product [product]="product"></michal-product>
