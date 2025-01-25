@@ -12,6 +12,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AuthService } from './services/auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -31,22 +33,30 @@ export class HomeComponent {
   loggedInUser: any = null;
   errorMessage = '';
 
-  constructor(private router: Router, private fakeStoreService: FakeStoreService) {}
+  constructor(
+    private router: Router, 
+    private fakeStoreService: FakeStoreService,
+    private authService: AuthService
+  ) {}
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
+    event.preventDefault();
     event.stopPropagation();
   }
 
   ngOnInit(): void {
-    this.loggedInUser = this.fakeStoreService.getLoggedInUser();
+   // this.loggedInUser = this.fakeStoreService.getLoggedInUser();
+    this.loggedInUser = this.authService.getLoggedInUser();
   }
 
   login(): void {
     this.fakeStoreService.login(this.username, this.password).subscribe((success: any) => {
       if (success) {
-        this.loggedInUser = this.fakeStoreService.getLoggedInUser();
+        const user = this.fakeStoreService.getLoggedInUser();
+        this.authService.setLoggedInUser(user); // Uložení uživatele do localStorage
+        this.loggedInUser = user; // Nastavení lokální proměnné
         this.errorMessage = '';
       } else {
         this.errorMessage = 'Nesprávné přihlašovací údaje';
@@ -55,15 +65,11 @@ export class HomeComponent {
   }
 
   logout(): void {
-    this.fakeStoreService.logout();
+    this.authService.logout(); // Smazání uživatele z localStorage
     this.loggedInUser = null;
   }
 
-  navigateToSecondPage() {
-    this.router.navigate(['/second-page']);
-  }
-
-  navigateToProduct() {
+  navigateToProduct(): void {
     this.router.navigate(['/products']);
   }
 }
