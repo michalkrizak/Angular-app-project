@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { RouterModule } from '@angular/router';
 import { ProductComponent } from "./product/product.component";
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Injectable({
   providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
@@ -16,7 +16,7 @@ import { ProductComponent } from "./product/product.component";
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ProductComponent],
+  imports: [CommonModule, RouterModule, ProductComponent, MatProgressSpinnerModule],
 })
 export class ProductsComponent implements OnInit {
   products: IProduct[] = [];
