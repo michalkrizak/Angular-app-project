@@ -8,7 +8,9 @@
 </div>
     <div *ngIf="products.length > 0" class="product-list">
       <div *ngFor="let product of products" class="product-item">
+
         <michal-product [product]="product"></michal-product>        
+
       </div>
     </div>
   </div>
