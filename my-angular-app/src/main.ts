@@ -8,6 +8,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes), // Nastavení routeru
-    provideHttpClient(), provideAnimationsAsync()    // Nastavení HttpClientModule
+    provideHttpClient(), provideAnimationsAsync(), provideAnimationsAsync()    // Nastavení HttpClientModule
   ]
 }).catch(err => console.error(err));

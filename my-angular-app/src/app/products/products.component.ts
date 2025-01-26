@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 import { RouterModule } from '@angular/router';
 import { ProductComponent } from "./product/product.component";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
@@ -20,10 +21,18 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 })
 export class ProductsComponent implements OnInit {
   products: IProduct[] = [];
+  user: any = null;
 
-  constructor(private fakeStoreService: FakeStoreService) {}
+  constructor(private fakeStoreService: FakeStoreService
+    , private authService: AuthService
+    , private router: Router
+  ) {}
 
   ngOnInit(): void {
+    if (this.authService.getLoggedInUser() === null) {
+      this.router.navigate(['']);
+    }
+    else {
     // Načtení všech produktů při inicializaci komponenty
     this.fakeStoreService.getAllProducts$().subscribe({
       next: (data) => {
@@ -35,5 +44,16 @@ export class ProductsComponent implements OnInit {
         console.error('Error fetching products:', error);
       }
     });
+
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+      console.log('Current user:', user); // Debug
+    });
+  }
+}
+
+  logout(): void {
+    this.authService.logout(); // Smazání uživatele z localStorage
+    this.router.navigate(['']);
   }
 }

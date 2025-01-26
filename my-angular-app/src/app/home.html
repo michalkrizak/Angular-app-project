@@ -1,5 +1,5 @@
-<!-- <div class="center"> 
-  <div  class="frame"> 
+<div class="center">
+  <div class="frame">
 
     <div *ngIf="loggedInUser; else loginForm">
       <p>Přihlášen jako: {{ loggedInUser?.username }}</p>
@@ -9,67 +9,39 @@
 
     <ng-template #loginForm class="form">
       <div>
-      <form (ngSubmit)="login()" class="register-form">
-        <label for="username">Uživatelské jméno:</label>
-        <input type="text" id="username" [(ngModel)]="username" name="username" required />
+        <form (ngSubmit)="login()" class="register-form">
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Uživatelské jméno</mat-label>
+            <input matInput type="text" id="username" [(ngModel)]="username" name="username" required />
+          </mat-form-field>
 
-        <label for="password">Heslo:</label>
-        <input type="password" id="password" [(ngModel)]="password" name="password" required />
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Heslo</mat-label>
+            <input 
+              matInput 
+              [type]="hide() ? 'password' : 'text'" 
+              id="password" 
+              [(ngModel)]="password" 
+              name="password" 
+              required 
+            />
+            <button 
+              mat-icon-button 
+              matSuffix 
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()"
+              class="password-toggle-button"
+            >
+              <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+          
 
-        <button type="submit">Přihlásit</button>
-      </form>
-      <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p></div>
+          <button mat-raised-button color="primary" type="submit">Přihlásit</button>
+        </form>
+        <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+      </div>
     </ng-template>
   </div>
-</div> 
- -->
-
-<div class="center"> 
-  <div  class="frame"> 
-
-    <div *ngIf="loggedInUser; else loginForm">
-      <p>Přihlášen jako: {{ loggedInUser?.username }}</p>
-      <button (click)="logout()">Odhlásit</button>
-      <button (click)="navigateToProduct()">Produkty</button>
-    </div>
-    <!-- direktivaa -->
-    <ng-template #loginForm class="form">
-        <mat-form-field (ngSubmit)="login()">
-          <mat-label>Enter your password</mat-label>
-          <input matInput [type]="hide() ? 'password' : 'text'" />
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="clickEvent($event)"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide()"
-          >
-            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-      </ng-template>
-  </div>
 </div>
-
-<!-- <div class="example-container">
-  <mat-form-field>
-    <mat-label>Enter your password</mat-label>
-    <input matInput [type]="hide() ? 'password' : 'text'" />
-    <button
-      mat-icon-button
-      matSuffix
-      (click)="clickEvent($event)"
-      [attr.aria-label]="'Hide password'"
-      [attr.aria-pressed]="hide()"
-    >
-      <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field>
-
-  <mat-form-field floatLabel="always">
-    <mat-label>Amount</mat-label>
-    <input matInput type="number" class="example-right-align" placeholder="0" />
-    <span matTextPrefix>$&nbsp;</span>
-    <span matTextSuffix>.00</span>
-  </mat-form-field>
-</div> -->
