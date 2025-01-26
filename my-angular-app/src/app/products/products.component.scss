@@ -73,6 +73,9 @@
 .search-container {
   position: relative;
   margin: 20px 0;
+ // width: 500px;
+  display: grid;
+  width: 100%;
 
   input {
     width: 100%;
@@ -80,10 +83,12 @@
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    //width:500px;
   }
 }
 
 .autocomplete-list {
+  //width:500px;
   position: absolute;
   top: 100%;
   left: 0;
@@ -111,4 +116,8 @@
       }
     }
   }
+}
+
+mat-slider {
+  width: 300px;
 }
