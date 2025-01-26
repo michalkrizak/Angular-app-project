@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { IUser } from './auth.service';
 
 export interface IProduct {
   id: number;
@@ -56,7 +57,7 @@ export class FakeStoreService {
     });
   }
 
-  getLoggedInUser(): any {
+  getLoggedInUser(): IUser {
     return this.loggedInUser;
   }
 

@@ -1,6 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+export interface IUser {
+    id: number;
+    username: string;
+    email: string;
+    password: string;
+    name: {
+      firstname: string;
+      lastname: string;
+    }
+    phone: string;
+    __v: number;
+  }
+
 @Injectable({
   providedIn: 'root',
 })
@@ -10,22 +23,22 @@ export class AuthService {
 
   constructor() {
     const storedUser = localStorage.getItem(this.localStorageKey);
-    this.userSubject = new BehaviorSubject<any>(storedUser ? JSON.parse(storedUser) : null);
+    this.userSubject = new BehaviorSubject<IUser>(storedUser ? JSON.parse(storedUser) : null);
   }
 
   // Přístup k aktuálnímu uživateli jako Observable
-  get user$(): Observable<any> {
+  get user$(): Observable<IUser> {
     return this.userSubject.asObservable();
   }
 
   // Nastavení přihlášeného uživatele a aktualizace BehaviorSubject
-  setLoggedInUser(user: any): void {
+  setLoggedInUser(user: IUser): void {
     localStorage.setItem(this.localStorageKey, JSON.stringify(user));
     this.userSubject.next(user); // Oznámení o změně
   }
 
   // Načtení aktuálního uživatele
-  getLoggedInUser(): any {
+  getLoggedInUser(): IUser {
     return this.userSubject.value;
   }
 

@@ -12,7 +12,9 @@ export const routes: Routes = [
   { path: 'second-page', component: SecondPageComponent }, // Druhá stránka
   //{ path: 'products', component: ProductsComponent } ,
   //{ path: 'product/:id', component: ProductDetailComponent }, // Detail produktu
-  { path: '**', component: HomeComponent },
   { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] }, // Ochrana pomocí AuthGuard
   { path: 'product/:id', component: ProductDetailComponent, canActivate: [AuthGuard] }, // Ochrana detailu produktu
+
+
+  { path: '**', component: HomeComponent },
 ];

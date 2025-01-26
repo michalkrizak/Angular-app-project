@@ -5,9 +5,11 @@ import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { RouterModule } from '@angular/router';
 import { ProductComponent } from "./product/product.component";
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../services/auth.service';
 import { LogoutButtonComponent } from '../logout-button/logout-button.component';
+import { FormsModule } from '@angular/forms';
+import {MatSliderModule} from '@angular/material/slider';
 
 @Injectable({
   providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
@@ -18,11 +20,15 @@ import { LogoutButtonComponent } from '../logout-button/logout-button.component'
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, MatProgressSpinnerModule],
+  imports: [CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
 })
 export class ProductsComponent implements OnInit {
   products: IProduct[] = [];
   user: any = null;
+  searchResults: IProduct[] = []; // Výsledky pro autocomplete
+  searchTerm: string = '';
+  minPrice: number = 0;
+  maxPrice: number = 1000;
 
   constructor(private fakeStoreService: FakeStoreService
     , private authService: AuthService
@@ -54,4 +60,35 @@ export class ProductsComponent implements OnInit {
     this.authService.logout(); // Smazání uživatele z localStorage
     this.router.navigate(['']);
   }
+
+  filterProducts(): void {
+    var term = this.searchTerm.toLowerCase();
+    if (term.length < 2) {
+      this.searchResults = [];
+      }
+      else{
+        this.searchResults = this.products.filter((product) =>
+        product.title.toLowerCase().includes(term)
+    );
+  }
+  }
+
+  CheapestProduct(): void {
+    this.products.sort((a, b) => a.price - b.price);
+  }
+
+  MostExpensive(): void {
+    this.products.sort((a, b) => b.price - a.price);
+  }
+
+  abc(): void {
+    this.products.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  // Přesměrování na detail produktu
+  goToProductDetail(productId: number): void {
+    this.router.navigate(['/product', productId]);
+  }
+
 }
+

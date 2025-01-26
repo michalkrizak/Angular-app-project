@@ -12,7 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { AuthService } from './services/auth.service';
+import { AuthService, IUser } from './services/auth.service';
 
 
 @Component({
@@ -56,6 +56,7 @@ export class HomeComponent {
       if (success) {
         const user = this.fakeStoreService.getLoggedInUser();
         this.authService.setLoggedInUser(user); // Uložení uživatele do localStorage
+        console.warn('Přihlášení:', user);
         this.loggedInUser = user; // Nastavení lokální proměnné
         this.errorMessage = '';
       } else {
@@ -65,6 +66,7 @@ export class HomeComponent {
   }
 
   logout(): void {
+    console.warn('Odhlášení:');
     this.authService.logout(); // Smazání uživatele z localStorage
     this.loggedInUser = null;
   }
