@@ -1,5 +1,6 @@
 <div class="products">
-  <button mat-raised-button color="primary" (click)="logout()">Odhlásit</button>
+ <!--  <button mat-raised-button color="primary" (click)="logout()">Odhlásit</button> -->
+  <app-logout-button></app-logout-button>
 
     <h1>Products</h1>
 <div class="center">
@@ -7,7 +8,9 @@
 </div>
     <div *ngIf="products.length > 0" class="product-list">
       <div *ngFor="let product of products" class="product-item">
-        <michal-product [product]="product"></michal-product>       
+
+        <michal-product [product]="product"></michal-product>        
+
       </div>
     </div>
   </div>
