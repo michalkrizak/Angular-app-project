@@ -2,6 +2,29 @@
  <!--  <button mat-raised-button color="primary" (click)="logout()">Odhlásit</button> -->
   <app-logout-button></app-logout-button>
 
+   <!-- Vyhledávací pole -->
+   <div class="search-container">
+    <input 
+      type="text" 
+      placeholder="Vyhledejte produkt..." 
+      [(ngModel)]="searchTerm" 
+      (input)="filterProducts()" />
+
+    <!-- Výsledky hledání -->
+    <div class="autocomplete-list" *ngIf="searchResults.length > 0">
+      <ul>
+        <li 
+          *ngFor="let product of searchResults" 
+          (click)="goToProductDetail(product.id)">
+          <img [src]="product.image" alt="{{ product.title }}" />
+        {{ product.title }}
+        {{ product.price | currency }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
     <h1>Products</h1>
 <div class="center">
     <mat-spinner *ngIf="products.length === 0" [diameter]="50"></mat-spinner>
