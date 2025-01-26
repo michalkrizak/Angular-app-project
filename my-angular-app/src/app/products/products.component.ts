@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ProductComponent } from "./product/product.component";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AuthService } from '../services/auth.service';
+import { LogoutButtonComponent } from '../logout-button/logout-button.component';
 
 @Injectable({
   providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
@@ -17,7 +18,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ProductComponent, MatProgressSpinnerModule],
+  imports: [CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, MatProgressSpinnerModule],
 })
 export class ProductsComponent implements OnInit {
   products: IProduct[] = [];
@@ -29,10 +30,7 @@ export class ProductsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.getLoggedInUser() === null) {
-      this.router.navigate(['']);
-    }
-    else {
+
     // Načtení všech produktů při inicializaci komponenty
     this.fakeStoreService.getAllProducts$().subscribe({
       next: (data) => {
@@ -49,7 +47,7 @@ export class ProductsComponent implements OnInit {
       this.user = user;
       console.log('Current user:', user); // Debug
     });
-  }
+  
 }
 
   logout(): void {
