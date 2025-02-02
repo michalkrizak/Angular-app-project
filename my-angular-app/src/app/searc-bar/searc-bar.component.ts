@@ -1,38 +1,34 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { FakeStoreService, IProduct } from '../services/fake-store.service';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { RouterModule } from '@angular/router';
-import { ProductComponent } from "./product/product.component";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../services/auth.service';
 import { LogoutButtonComponent } from '../logout-button/logout-button.component';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { HeaderComponent } from '../header/header.component';
+import { ProductComponent } from '../products/product/product.component';
 
 @Injectable({
   providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
 })
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
-  standalone: true,
+  selector: 'app-search-bar',
   imports: [CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
+  templateUrl: './searc-bar.component.html',
+  styleUrl: './searc-bar.component.scss'
 })
-export class ProductsComponent implements OnInit {
-  @Input() products: IProduct[] = [];
-  @Input() user: any = null;
 
-  //Products: IProduct[] = [];
-  //user: any = null;
+
+export class SearcBarComponent implements OnInit {
+  products: IProduct[] = [];
   searchResults: IProduct[] = []; // Výsledky pro autocomplete
   searchTerm: string = '';
-  minPrice: number = 0;
-  maxPrice: number = 1000;
+  user: any = null;
 
   constructor(private fakeStoreService: FakeStoreService
     , private authService: AuthService
@@ -60,39 +56,20 @@ export class ProductsComponent implements OnInit {
   
 }
 
-  logout(): void {
-    this.authService.logout(); // Smazání uživatele z localStorage
-    this.router.navigate(['']);
-  }
-
-  filterProducts(): void {
-    var term = this.searchTerm.toLowerCase();
-    if (term.length < 2) {
-      this.searchResults = [];
-      }
-      else{
-        this.searchResults = this.products.filter((product) =>
-        product.title.toLowerCase().includes(term)
-    );
-  }
-  }
-
-  CheapestProduct(): void {
-    this.products.sort((a, b) => a.price - b.price);
-  }
-
-  MostExpensive(): void {
-    this.products.sort((a, b) => b.price - a.price);
-  }
-
-  abc(): void {
-    this.products.sort((a, b) => a.title.localeCompare(b.title));
-  }
-
-  // Přesměrování na detail produktu
-  goToProductDetail(productId: number): void {
-    this.router.navigate(['/product', productId]);
-  }
-
+filterProducts(): void {
+  var term = this.searchTerm.toLowerCase();
+  if (term.length < 2) {
+    this.searchResults = [];
+    }
+    else{
+      this.searchResults = this.products.filter((product) =>
+      product.title.toLowerCase().includes(term)
+  );
+}
 }
 
+// Přesměrování na detail produktu
+goToProductDetail(productId: number): void {
+  this.router.navigate(['/product', productId]);
+}
+}
