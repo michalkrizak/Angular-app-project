@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { HeaderComponent } from '../header/header.component';
 
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { HttpClient } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
 })
@@ -39,6 +42,7 @@ export class ProductsComponent implements OnInit {
     , private router: Router
   ) {}
 
+  
   ngOnInit(): void {
 
     // Načtení všech produktů při inicializaci komponenty

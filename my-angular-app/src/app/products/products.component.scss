@@ -44,7 +44,8 @@
           overflow: hidden; /* Skryje přetečený text */
           text-overflow: ellipsis; /* Přidá tři tečky na konci */
           display: -webkit-box; /* Používá flexbox pro text */
-          -webkit-line-clamp: 3; /* Omezí počet řádků na dva */
+          -webkit-line-clamp: 3;
+          line-clamp: 3;
           -webkit-box-orient: vertical; /* Nastaví orientaci textu na vertikální */
         }
   
@@ -62,7 +63,8 @@
           overflow: hidden; /* Skryje přetečený text */
           text-overflow: ellipsis; /* Přidá tři tečky na konci */
           display: -webkit-box; /* Používá flexbox pro text */
-          -webkit-line-clamp: 2; /* Omezí počet řádků na dva */
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
           -webkit-box-orient: vertical; /* Nastaví orientaci textu na vertikální */
         }
       
