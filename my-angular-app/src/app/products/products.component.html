@@ -1,52 +1,30 @@
-<div class="products">
- <!--  <button mat-raised-button color="primary" (click)="logout()">Odhlásit</button> -->
-  <app-logout-button></app-logout-button>
-
-   <!-- Vyhledávací pole -->
-    <div class="center">
-   <div class="search-container">
-    <input 
-      type="text" 
-      placeholder="Vyhledejte produkt..." 
-      [(ngModel)]="searchTerm" 
-      (input)="filterProducts()" />
-
-    <!-- Výsledky hledání -->
-    <div class="autocomplete-list" *ngIf="searchResults.length > 0">
-      <ul>
-        <li 
-          *ngFor="let product of searchResults" 
-          (click)="goToProductDetail(product.id)">
-          <img [src]="product.image" alt="{{ product.title }}" />
-        {{ product.title }}
-        {{ product.price | currency }}
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-    <h1>Products</h1>
 <div class="center">
-  <button mat-raised-button color="primary" (click)="abc()">ABC</button>
-  <button mat-raised-button color="primary" (click)="CheapestProduct()">Nejlevnější</button>
-  <button mat-raised-button color="primary" (click)="MostExpensive()">Nejdrazší</button>
+  <div class="layout">
+  <app-header></app-header>
+  <div class="products">
 
-  <mat-slider min="5" max="170" step="5" showTickMarks discrete>
-    <input [(ngModel)]="minPrice"  value="30" matSliderStartThumb>
-    <input [(ngModel)]="maxPrice"  value="100" matSliderEndThumb>
-  </mat-slider>
+      <h1>Products</h1>
+  <div class="center">
+    <button mat-raised-button color="primary" (click)="abc()">ABC</button>
+    <button mat-raised-button color="primary" (click)="CheapestProduct()">Nejlevnější</button>
+    <button mat-raised-button color="primary" (click)="MostExpensive()">Nejdrazší</button>
 
-    <mat-spinner *ngIf="products.length === 0" [diameter]="50"></mat-spinner>
-</div>
-    <div *ngIf="products.length > 0" class="product-list">
-      <ng-container *ngFor="let product of products">
-        <div 
-          *ngIf="product.price >= minPrice && (product.price <= maxPrice || maxPrice === 170)" 
-          class="product-item">
-            <michal-product [product]="product"></michal-product>        
-        </div>
-      </ng-container>
-    </div>
+    <mat-slider min="5" max="170" step="5" showTickMarks discrete>
+      <input [(ngModel)]="minPrice"  value="30" matSliderStartThumb>
+      <input [(ngModel)]="maxPrice"  value="100" matSliderEndThumb>
+    </mat-slider>
+
+      <mat-spinner *ngIf="products.length === 0" [diameter]="50"></mat-spinner>
   </div>
-  
+      <div *ngIf="products.length > 0" class="product-list product-bgcolor">
+        <ng-container *ngFor="let product of products">
+          <div 
+            *ngIf="product.price >= minPrice && (product.price <= maxPrice || maxPrice === 170)" 
+            class="product-item">
+              <michal-product [product]="product"></michal-product>        
+          </div>
+        </ng-container>
+      </div>
+    </div>
+</div>
+</div>

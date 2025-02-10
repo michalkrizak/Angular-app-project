@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { ProductsComponent } from './products/products.component'; // Importuj ProductsComponent
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { AuthGuard } from './guards/auth.guard';
+import { CartComponent } from './cart/cart.component';
 
 
 export const routes: Routes = [
@@ -14,6 +15,8 @@ export const routes: Routes = [
   //{ path: 'product/:id', component: ProductDetailComponent }, // Detail produktu
   { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] }, // Ochrana pomocí AuthGuard
   { path: 'product/:id', component: ProductDetailComponent, canActivate: [AuthGuard] }, // Ochrana detailu produktu
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] }, // Ochrana detailu produktu
+
 
 
   { path: '**', component: HomeComponent },

@@ -17,6 +17,7 @@
           border-radius: 8px;
           height: 250px;
           width: 150px;
+          background-color: snow;
         }
         &-title {
           height: 83px;
@@ -29,6 +30,9 @@
         &-description {
           height: 83px;
           width: 150px;
+        }
+        &-bgcolor{
+          background-color: #f1f1f1;
         }
         }
       }
@@ -120,4 +124,18 @@
 
 mat-slider {
   width: 300px;
+}
+
+.layout {
+  width: 80%;
+}
+
+@media (max-width: 646px) {
+  .layout {
+    width: 100%;
+  }
+
+  .description {
+    max-width: 90%;
+  }
 }
