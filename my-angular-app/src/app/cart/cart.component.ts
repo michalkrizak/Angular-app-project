@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-cart',
@@ -8,5 +10,9 @@ import { Component } from '@angular/core';
   standalone: true,
 })
 export class CartComponent {
+  constructor(public dialogRef: MatDialogRef<CartComponent>) {}
 
+  close(): void {
+    this.dialogRef.close();
+  }
 }

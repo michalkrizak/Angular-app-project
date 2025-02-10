@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Router, RouterModule } from '@angular/router';
 import { LogoutButtonComponent } from '../logout-button/logout-button.component';
 import { SearcBarComponent } from '../searc-bar/searc-bar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CartComponent } from '../cart/cart.component';
 
 
 @Component({
@@ -13,7 +15,10 @@ import { SearcBarComponent } from '../searc-bar/searc-bar.component';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) {} 
+  constructor(
+    private router: Router,
+    private dialog: MatDialog
+  ) {} 
 
   @Input() user: any = null;
   @Input() products: any = null;
@@ -24,6 +29,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ToCart(): void {
-    this.router.navigate(['../cart']);
+    //this.router.navigate(['../cart']);
+    this.dialog.open(CartComponent, {
+      width: '1900px', // Use viewport width units instead of pixels
+      maxWidth: '1900px', // Override default max width
+      height: '950px',
+      maxHeight: '950px'
+    });
   }
 }
