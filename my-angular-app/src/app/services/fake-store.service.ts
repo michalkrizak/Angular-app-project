@@ -16,6 +16,17 @@ export interface IProduct {
   };
 }
 
+export interface ICartItem {
+  id: number;
+  productId: number;
+  userId: number;
+  date: string;
+  products: [{
+    productId: number;
+    quantity: number;
+  }]
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -38,6 +49,10 @@ export class FakeStoreService {
   // Metoda pro získání všech uživatelů
   getAllUsers(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/users`);
+  }
+
+  getUserCartItems(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/carts/user/${userId}`);
   }
 
   // Metoda pro přihlášení

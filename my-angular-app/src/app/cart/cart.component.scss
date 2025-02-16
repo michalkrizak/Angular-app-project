@@ -148,3 +148,43 @@ a:hover{
     background-position-x: 95%;
     background-position-y: center;
 }
+
+.cart-item-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Maximálně 2 řádky */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3em; /* Přibližná výška dvou řádků */
+    white-space: normal; /* Zajištění správného zalamování */
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  
+  .cart-item-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Maximálně 3 řádky */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4.5em; /* Přibližná výška tří řádků */
+    white-space: normal;
+    font-size: 0.9em;
+    color: #666;
+  }
+
+  .cart-items-container {
+    max-height: 600px; /* Nastav výšku podle potřeby */
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding-right: 10px;
+    
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .cart-items-container::-webkit-scrollbar {
+    width: 5px;
+    opacity: 0; /* Skrytý scrollbar */
+    transition: opacity 0.3s;
+  }
