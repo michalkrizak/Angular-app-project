@@ -188,3 +188,10 @@ a:hover{
     opacity: 0; /* Skrytý scrollbar */
     transition: opacity 0.3s;
   }
+
+  .empty-cart {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.5em;
+    color: #000000;
+  }

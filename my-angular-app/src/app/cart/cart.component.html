@@ -13,9 +13,10 @@
                 </div>
             </div>    
             <div class="cart-items-container">
-                <div class="row border-top border-bottom" *ngFor="let item of cartProducts">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="{{item.product.image}}"></div>
+                <ng-container *ngIf="cartProducts.length > 0; else emptyCart">
+                    <div class="row border-top border-bottom" *ngFor="let item of cartProducts">
+                        <div class="row main align-items-center">
+                            <div class="col-2"><img class="img-fluid" src="{{item.product.image}}"></div>
                         <div class="col">
                             <div class="row text-muted cart-item-title">{{item.product.title}}</div>
                             <div class="row cart-item-description">{{item.product.description}}</div>
@@ -26,6 +27,12 @@
                         <div class="col">&euro; {{item.product.price}} <span class="close" (click)="removeItem(item)">&#10005;</span></div>
                     </div>
                 </div>
+                </ng-container>
+                <ng-template #emptyCart>
+                    <div class="empty-cart">
+                        <p>Košík je prázdný.</p>
+                    </div>
+                </ng-template>
             </div>
 
             <div class="back-to-shop" (click)="close()"><a (click)="close()">&leftarrow;</a><span class="text-muted">Zpět na hlavní stránku</span></div>
