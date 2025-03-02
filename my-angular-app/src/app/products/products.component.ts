@@ -11,6 +11,7 @@ import { LogoutButtonComponent } from '../logout-button/logout-button.component'
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { HeaderComponent } from '../header/header.component';
+import { CartService } from '../services/cart-service';
 
 @Injectable({
   providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
@@ -21,7 +22,7 @@ import { HeaderComponent } from '../header/header.component';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
+  imports: [CartService, CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
 })
 export class ProductsComponent implements OnInit {
   @Input() products: IProduct[] = [];
@@ -66,7 +67,7 @@ export class ProductsComponent implements OnInit {
   }
 
   filterProducts(): void {
-    var term = this.searchTerm.toLowerCase();
+    let term  = this.searchTerm.toLowerCase();
     if (term.length < 2) {
       this.searchResults = [];
       }

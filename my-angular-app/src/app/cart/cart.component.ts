@@ -3,6 +3,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FakeStoreService, ICartItem, IProduct } from '../services/fake-store.service';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CartService } from '../services/cart-service';
+import { concatMap, forkJoin, from, map, mergeMap, reduce, tap, toArray } from 'rxjs';
 
 export interface ICartItemWithQuantity{
     product: IProduct;
@@ -14,7 +17,8 @@ export interface ICartItemWithQuantity{
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
+  providers: [CartService]
 })
 
 
@@ -33,9 +37,14 @@ export class CartComponent implements OnInit {
   
   
 
-  constructor(public dialogRef: MatDialogRef<CartComponent>, private fakeStoreService: FakeStoreService, private authService: AuthService) {}
+  constructor(public dialogRef: MatDialogRef<CartComponent>, 
+    private fakeStoreService: FakeStoreService, 
+    private authService: AuthService,
+    private cartService: CartService
+  ) {}
   ngOnInit(): void {
-    this.loggedInUser = this.authService.getLoggedInUser();
+   // this.cartService.getCartItems$();
+   /* this.loggedInUser = this.authService.getLoggedInUser();
     console.log('loggedInUser', this.loggedInUser);
   
     this.fakeStoreService.getUserCartItems(this.loggedInUser.id).subscribe((items) => {
@@ -56,9 +65,57 @@ export class CartComponent implements OnInit {
           this.in++;
         }
       }
-    });
+    });*/
+    this.loadAllProducts1();
   }
   
+  loadAllProducts(): void {
+    this.loggedInUser = this.authService.getLoggedInUser();
+    console.log('loggedInUser', this.loggedInUser);
+
+    this.fakeStoreService.getUserCartItems(this.loggedInUser.id).pipe(
+        tap(items => this.cartItems = items),
+        mergeMap((items: any[]) => from(items)),
+        mergeMap((item: any) => from(item.products)),
+        mergeMap((product: any) => this.fakeStoreService.getProductById(product.productId).pipe(
+          map(prod => ({
+            product: prod,
+            quantity: product.quantity
+          }))
+        )),
+        toArray()
+    ).subscribe(cart  => {
+      console.log('cart', cart);
+        this.cartProducts = cart;
+      });
+    }
+
+    loadAllProducts1(): void {
+      this.loggedInUser = this.authService.getLoggedInUser();
+      console.log('loggedInUser', this.loggedInUser);
+  
+      this.fakeStoreService.getUserCartItems(this.loggedInUser.id).pipe(
+          tap(items => this.cartItems = items), // Uložení košíku
+          //tap(products => console.log('Extracted products:', products)),
+          //map(items => items.map(item => item.products).flat()),
+          map(items => { return [].concat(...items.map(item => item.products)) }),
+          concatMap(products => from(products)), 
+          mergeMap((product: any) => {
+            return this.fakeStoreService.getProductById(product.productId).pipe(
+              map(prod => ({
+                product: prod,
+                quantity: product.quantity
+              }))
+            );
+        }),
+       toArray()
+   
+      ).subscribe(cart => {
+        console.log('cart', cart);
+        this.cartProducts = cart;
+      });
+  }
+
   loadProduct(index: number, productId: number, quantity: number): void {
     this.fakeStoreService.getProductById(productId).subscribe((product) => {
       console.log('Loaded product:', product);
