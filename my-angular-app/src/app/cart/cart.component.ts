@@ -1,16 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FakeStoreService, ICartItem, IProduct } from '../services/fake-store.service';
+import {
+  FakeStoreService,
+  IProduct,
+} from '../services/fake-store.service';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { CartService } from '../services/cart-service';
-import { concatMap, forkJoin, from, map, mergeMap, reduce, tap, toArray } from 'rxjs';
+import {
+  BehaviorSubject,
+  concatMap,
+  firstValueFrom,
+  from,
+  map,
+  mergeMap,
+  toArray,
+} from 'rxjs';
 
-export interface ICartItemWithQuantity{
-    product: IProduct;
-    quantity: number;
-  }
+
+export enum eItemOperations{
+  ADD = 'add',
+  REMOVE = 'remove',
+  ALTER = 'alter'
+}
+export interface ICartItemWithQuantity {
+  product: IProduct;
+  quantity: number;
+}
+
+export interface ICart {
+  id: number;
+  products: ICartItemWithQuantity[];
+  deliveryPrice: number;
+}
 
 @Component({
   selector: 'app-cart',
@@ -18,152 +40,119 @@ export interface ICartItemWithQuantity{
   styleUrls: ['./cart.component.scss'],
   standalone: true,
   imports: [CommonModule],
-  providers: [CartService]
+  providers: [CartService],
 })
-
-
 export class CartComponent implements OnInit {
-  user: any;
-  //cartItems: any[] = [];
-  loggedInUser: any = null;
-  product: IProduct[] = [];
-  //products: ICartItemWithQuantity[] = [];
-  cartProducts: ICartItemWithQuantity[] = [];
-  products: IProduct[] = [];
-  cartItems: ICartItem[] = [];
-  in : number = 0;
-  deliveryPrice: number = 10;
+  private loggedInUser: any = null;
+  private _cart = new BehaviorSubject<ICart>({
+    id: 1,
+    products: [],
+    deliveryPrice: 0,
+  });
 
-  
-  
+  public finalPrice$ = this._cart.pipe(
+    map((cart) => (cart && cart.id !== null ? this.calcFinalPrice(cart) : 0))
+  );
+  public cart$ = this._cart.asObservable();
+  public IOPS = eItemOperations
 
-  constructor(public dialogRef: MatDialogRef<CartComponent>, 
-    private fakeStoreService: FakeStoreService, 
-    private authService: AuthService,
-    private cartService: CartService
+  constructor(
+    public dialogRef: MatDialogRef<CartComponent>,
+    private fakeStoreService: FakeStoreService,
+    private authService: AuthService
   ) {}
+
   ngOnInit(): void {
-   // this.cartService.getCartItems$();
-   /* this.loggedInUser = this.authService.getLoggedInUser();
-    console.log('loggedInUser', this.loggedInUser);
-  
-    this.fakeStoreService.getUserCartItems(this.loggedInUser.id).subscribe((items) => {
-      //console.log('items', items);
-      this.cartItems = items;
-      console.log('Number of items:', this.cartItems.length);
-      console.log('items', this.cartItems);
-      this.cartItems.forEach(item => {
-        console.log('itemos', item);
-      });
-      // Načtení produktů pro každou položku v košíku
-      
-      for (let i = 0; i < this.cartItems.length; i++) {
-        for (let j = 0; j < this.cartItems[i].products.length; j++) {
-          //this.products[this.in].quantity = this.cartItems[i].products[j].quantity;
-          this.loadProduct(this.in, this.cartItems[i].products[j].productId, this.cartItems[i].products[j].quantity);
-          //this.products[this.in].quantity = this.cartItems[i].products[j].quantity;
-          this.in++;
-        }
-      }
-    });*/
-    this.loadAllProducts1();
+    this.loadAllProducts();
   }
-  
-  loadAllProducts(): void {
+
+  private loadAllProducts(): void {
     this.loggedInUser = this.authService.getLoggedInUser();
-    console.log('loggedInUser', this.loggedInUser);
-
-    this.fakeStoreService.getUserCartItems(this.loggedInUser.id).pipe(
-        tap(items => this.cartItems = items),
-        mergeMap((items: any[]) => from(items)),
-        mergeMap((item: any) => from(item.products)),
-        mergeMap((product: any) => this.fakeStoreService.getProductById(product.productId).pipe(
-          map(prod => ({
-            product: prod,
-            quantity: product.quantity
-          }))
-        )),
-        toArray()
-    ).subscribe(cart  => {
-      console.log('cart', cart);
-        this.cartProducts = cart;
-      });
-    }
-
-    loadAllProducts1(): void {
-      this.loggedInUser = this.authService.getLoggedInUser();
-      console.log('loggedInUser', this.loggedInUser);
-  
-      this.fakeStoreService.getUserCartItems(this.loggedInUser.id).pipe(
-          tap(items => this.cartItems = items), // Uložení košíku
-          //tap(products => console.log('Extracted products:', products)),
-          //map(items => items.map(item => item.products).flat()),
-          map(items => { return [].concat(...items.map(item => item.products)) }),
-          concatMap(products => from(products)), 
-          mergeMap((product: any) => {
-            return this.fakeStoreService.getProductById(product.productId).pipe(
-              map(prod => ({
-                product: prod,
-                quantity: product.quantity
-              }))
-            );
+    this.fakeStoreService
+      .getUserCartItems(this.loggedInUser.id)
+      .pipe(
+        map((items) => {
+          return [].concat(...items.map((item) => item.products));
         }),
-       toArray()
-   
-      ).subscribe(cart => {
-        console.log('cart', cart);
-        this.cartProducts = cart;
+        concatMap((products) => from(products)),
+        mergeMap((product: any) => {
+          return this.fakeStoreService.getProductById(product.productId).pipe(
+            map((prod) => ({
+              product: prod,
+              quantity: product.quantity,
+            }))
+          );
+        }),
+        toArray()
+      )
+      .subscribe((cart) => {
+        this.setCartProducts(cart)
       });
   }
 
-  loadProduct(index: number, productId: number, quantity: number): void {
-    this.fakeStoreService.getProductById(productId).subscribe((product) => {
-      console.log('Loaded product:', product);
-      /* if (!this.products) {
-        this.products = [];
-      } */
-      //this.products[index].product = product;
-      this.products[index] = product;
-
-      this.cartProducts.push({
-        product: product,
-        quantity: quantity,
-      });
-      //this.cartProducts[index].quantity = quantity;
-      //this.cartProducts[index].product = product;
-    });
+  private async setCartProducts(products: ICartItemWithQuantity[]){
+    try {
+      const cart = await firstValueFrom(this.cart$);
+      cart.products = products;
+      this._cart.next(cart);
+    } catch (error) {
+      console.log('Error updating products');
+    }
   }
 
+  private calcFinalPrice(cart: ICart) : number{
+    return (
+      cart.products.reduce(
+        (total, item) => total + item.product.price * item.quantity,
+        0
+      ) + cart.deliveryPrice
+    );
+  }
 
-
-  close(): void {
+  public close(): void {
     this.dialogRef.close();
   }
 
-
-  increaseQuantity(item: ICartItemWithQuantity): void {
+  public increaseQuantity(item: ICartItemWithQuantity): void {
     item.quantity++;
+    this.updateProduct(item, this.IOPS.ALTER);
   }
 
-  decreaseQuantity(item: ICartItemWithQuantity): void {
+  public decreaseQuantity(item: ICartItemWithQuantity): void {
     if (item.quantity > 1) {
       item.quantity--;
+      this.updateProduct(item, this.IOPS.ALTER);
     }
   }
 
-  totalPrice(): number {
-    const totalPrice = this.cartProducts.reduce((total, item) => total + item.product.price * item.quantity, 0);
-    return totalPrice + this.deliveryPrice;
+  public async updateProduct(product: ICartItemWithQuantity, operation : eItemOperations){
+    try {
+      const cart = await firstValueFrom(this.cart$);
+
+      if(operation === this.IOPS.ADD){
+        cart.products.push(product);
+      }
+      if(operation === this.IOPS.REMOVE){
+        cart.products = cart.products.filter((i) => i.product.id !== product.product.id);
+      }
+      if(operation === this.IOPS.ALTER){
+        let index = cart.products.findIndex((i) => i.product.id === product.product.id);
+        cart.products[index] = product;
+      }
+      this._cart.next(cart);
+    } catch (error) {
+      console.log('Error managing product.');
+    }
   }
 
-  removeItem(item: ICartItemWithQuantity): void {
-    this.cartProducts = this.cartProducts.filter(i => i !== item);
+  public async updateDeliveryPrice(event: Event) {
+    try {
+      const cart = await firstValueFrom(this.cart$);
+      cart.deliveryPrice = Number((event.target as HTMLSelectElement).value);
+      this._cart.next(cart);
+    } catch (error) {
+      console.log('Error changing delivery price');
+    }
   }
-
-  updateDeliveryPrice(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.deliveryPrice = Number(selectElement.value);
-}
-
 
 }

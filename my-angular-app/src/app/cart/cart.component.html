@@ -3,18 +3,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<div class="card">
+<div class="card" *ngIf="cart$ | async as cart">
     <div class="row">
         <div class="col-md-8 cart">
             <div class="title">
                 <div class="row">
                     <div class="col"><h4><b>Košík</b></h4></div>
-                    <div class="col align-self-center text-right text-muted">{{cartProducts.length}} položek</div>
+                    <div class="col align-self-center text-right text-muted">{{cart.products.length}} položek</div>
                 </div>
             </div>    
             <div class="cart-items-container">
-                <ng-container *ngIf="cartProducts.length > 0; else emptyCart">
-                    <div class="row border-top border-bottom" *ngFor="let item of cartProducts">
+                <ng-container *ngIf="cart.products.length > 0; else emptyCart">
+                    <div class="row border-top border-bottom" *ngFor="let item of cart.products">
                         <div class="row main align-items-center">
                             <div class="col-2"><img class="img-fluid" src="{{item.product.image}}"></div>
                         <div class="col">
@@ -24,7 +24,7 @@
                         <div class="col">
                             <a (click)="decreaseQuantity(item)">-</a><a href="#" class="border">{{item.quantity}}</a><a (click)="increaseQuantity(item)">+</a>
                         </div>
-                        <div class="col">&euro; {{item.product.price}} <span class="close" (click)="removeItem(item)">&#10005;</span></div>
+                        <div class="col">&euro; {{item.product.price}} <span class="close" (click)="updateProduct(item, IOPS.REMOVE)">&#10005;</span></div>
                     </div>
                 </div>
                 </ng-container>
@@ -41,7 +41,7 @@
             <div><h5><b>Souhrn</b></h5></div>
             <hr>
             <div class="row">
-                <div class="col" style="padding-left:0;">POLOŽEK {{cartProducts.length}}</div>
+                <div class="col" style="padding-left:0;">POLOŽEK {{cart.products.length}}</div>
             </div>
             <form>
                 <p>DOPRAVA</p>
@@ -55,7 +55,7 @@
             </form>
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">CELKOVÁ CENA</div>
-                <div class="col text-right">&euro; {{totalPrice() | number:'1.2-2'}}</div>
+                <div class="col text-right">&euro; {{finalPrice$ | async | number:'1.2-2'}}</div>
             </div>
             <button class="btn">KOUPIT</button>
         </div>
