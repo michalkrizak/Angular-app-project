@@ -31,7 +31,7 @@ export class CartComponent implements OnInit {
   cartProducts: ICartItemWithQuantity[] = [];
   products: IProduct[] = [];
   cartItems: ICartItem[] = [];
-  in : number = 0;
+
   deliveryPrice: number = 10;
 
   
