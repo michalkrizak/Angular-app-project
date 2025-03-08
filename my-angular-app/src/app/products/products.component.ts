@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FakeStoreService, IProduct } from '../services/fake-store.service';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductComponent } from "./product/product.component";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -12,42 +11,34 @@ import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { HeaderComponent } from '../header/header.component';
 import { CartService } from '../services/cart-service';
+import { ApiService, IProduct } from '../services/api-service';
 
 @Injectable({
-  providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
+  providedIn: 'root',
 })
-
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CartService, CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
+  imports: [CartService, CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule],
 })
 export class ProductsComponent implements OnInit {
   @Input() products: IProduct[] = [];
   @Input() user: any = null;
-
-  //Products: IProduct[] = [];
-  //user: any = null;
-  searchResults: IProduct[] = []; // Výsledky pro autocomplete
+  searchResults: IProduct[] = [];
   searchTerm: string = '';
   minPrice: number = 0;
   maxPrice: number = 1000;
 
-  constructor(private fakeStoreService: FakeStoreService
-    , private authService: AuthService
-    , private router: Router
-  ) {}
+  constructor(private apiService: ApiService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-
-    // Načtení všech produktů při inicializaci komponenty
-    this.fakeStoreService.getAllProducts$().subscribe({
+    // Použití nového API
+    this.apiService.getAllProducts().subscribe({
       next: (data) => {
-        //console.log(data[0].); // Debug: Zobrazení dat v konzoli
         this.products = data;
-        console.log(data); // Debug: Zobrazení dat v konzoli
+        console.log(data);
       },
       error: (error) => {
         console.error('Error fetching products:', error);
@@ -56,26 +47,22 @@ export class ProductsComponent implements OnInit {
 
     this.authService.user$.subscribe((user) => {
       this.user = user;
-      console.log('Current user:', user); // Debug
+      console.log('Current user:', user);
     });
-  
-}
+  }
 
   logout(): void {
-    this.authService.logout(); // Smazání uživatele z localStorage
+    this.authService.logout();
     this.router.navigate(['']);
   }
 
   filterProducts(): void {
-    let term  = this.searchTerm.toLowerCase();
+    let term = this.searchTerm.toLowerCase();
     if (term.length < 2) {
       this.searchResults = [];
-      }
-      else{
-        this.searchResults = this.products.filter((product) =>
-        product.title.toLowerCase().includes(term)
-    );
-  }
+    } else {
+      this.searchResults = this.products.filter((product) => product.title.toLowerCase().includes(term));
+    }
   }
 
   CheapestProduct(): void {
@@ -90,10 +77,7 @@ export class ProductsComponent implements OnInit {
     this.products.sort((a, b) => a.title.localeCompare(b.title));
   }
 
-  // Přesměrování na detail produktu
   goToProductDetail(productId: number): void {
     this.router.navigate(['/product', productId]);
   }
-
 }
-
