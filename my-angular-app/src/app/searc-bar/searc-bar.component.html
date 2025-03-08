@@ -1,26 +1,32 @@
 <div class="products">
-    <!--  <button mat-raised-button color="primary" (click)="logout()">Odhlásit</button> -->
-      <!-- Vyhledávací pole -->
-       <div class="center">
-      <div class="search-container">
-       <input 
-       class="search-bar"
-         type="text" 
-         placeholder="Vyhledejte produkt..." 
-         [(ngModel)]="searchTerm" 
-         (input)="filterProducts()" />
-   
-       <!-- Výsledky hledání -->
-       <div class="autocomplete-list" *ngIf="searchResults.length > 0">
-         <ul>
-           <li 
-             *ngFor="let product of searchResults" 
-             (click)="goToProductDetail(product.id)">
-             <img [src]="product.image" alt="{{ product.title }}" />
-           {{ product.title }}
-           {{ product.price | currency }}
-           </li>
-         </ul>
-       </div>
-     </div>
-   </div>
+  <div class="center">
+    <div class="search-container">
+      <div class="search-wrapper">
+        
+        <input 
+          class="search-bar"
+          type="text" 
+          placeholder="Vyhledejte produkt..." 
+          [(ngModel)]="searchTerm" 
+          (input)="filterProducts()" />
+        
+        <button mat-icon-button class="search-button">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+
+      <!-- Výsledky hledání -->
+      <div class="autocomplete-list" *ngIf="searchResults.length > 0">
+        <ul>
+          <li class="search-product" *ngFor="let product of searchResults" 
+            (click)="goToProductDetail(product.id)">
+            
+            <img class="image" [src]="product.image" alt="{{ product.title }}" />
+            {{ product.title }}
+            {{ product.price | currency }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

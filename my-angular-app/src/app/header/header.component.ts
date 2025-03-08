@@ -5,11 +5,12 @@ import { LogoutButtonComponent } from '../logout-button/logout-button.component'
 import { SearcBarComponent } from '../searc-bar/searc-bar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CartComponent } from '../cart/cart.component';
+import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-header',
-  imports: [LogoutButtonComponent, CommonModule, RouterModule, SearcBarComponent, RouterModule], // Import CommonModule
+  imports: [MatIcon, LogoutButtonComponent, CommonModule, RouterModule, SearcBarComponent, RouterModule], // Import CommonModule
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

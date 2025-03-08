@@ -1,8 +1,11 @@
 <div class="header container">
-  <img src="/assets/logo1.png" alt="logo">
+  <ng-content></ng-content>
   <app-search-bar></app-search-bar>
-  <div class="ToEnd">
+  <!-- <div class="ToEnd"> -->
     <app-logout-button></app-logout-button>
     <button (click)="ToCart()">Košík</button>
-  </div>
+    <span mat-icon-button class="icon-item" (click)="ToCart()">
+      <mat-icon >shopping_cart</mat-icon><span>  cart</span>
+    </span>
+  <!-- </div> -->
 </div>

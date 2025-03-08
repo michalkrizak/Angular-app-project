@@ -6,7 +6,7 @@ import { ProductsComponent } from './products/products.component'; // Importuj P
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CartComponent } from './cart/cart.component';
-
+import { HomePageComponent } from './home-page/home-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Domovská stránka
@@ -16,8 +16,8 @@ export const routes: Routes = [
   { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] }, // Ochrana pomocí AuthGuard
   { path: 'product/:id', component: ProductDetailComponent, canActivate: [AuthGuard] }, // Ochrana detailu produktu
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] }, // Ochrana detailu produktu
+  { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] },
 
 
-
-  { path: '**', component: HomeComponent },
+  { path: 'home-page', component: HomePageComponent, canActivate: [AuthGuard] } // Pokud není nalezena žádná cesta,
 ];
