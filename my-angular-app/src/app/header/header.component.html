@@ -1,11 +1,31 @@
 <div class="header container">
   <ng-content></ng-content>
+<span class="header-centered category-button-padding">
+  <button mat-button class="category-button header-centered" (click)="toggleCategoryMenu()">
+    All category <mat-icon>arrow_drop_down</mat-icon>
+  </button>
+  
+  <div class="category-menu" *ngIf="isCategoryMenuOpen">
+    <ul>
+      <li (click)="selectCategory('Category 1')">Category 1</li>
+      <li (click)="selectCategory('Category 2')">Category 2</li>
+      <li (click)="selectCategory('Category 3')">Category 3</li>
+    </ul>
+  </div>
+</span>
   <app-search-bar></app-search-bar>
   <!-- <div class="ToEnd"> -->
-    <app-logout-button></app-logout-button>
-    <button (click)="ToCart()">Košík</button>
+<span>
+  <span class="header-centered">
     <span mat-icon-button class="icon-item" (click)="ToCart()">
       <mat-icon >shopping_cart</mat-icon><span>  cart</span>
     </span>
+  </span>
+  <span class="header-centered">
+    <span mat-icon-button class="icon-item" (click)="logout()">
+      <mat-icon >logout</mat-icon><span>  logout</span>
+    </span>
+  </span>
+</span>
   <!-- </div> -->
 </div>

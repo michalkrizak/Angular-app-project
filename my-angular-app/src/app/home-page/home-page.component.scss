@@ -39,6 +39,14 @@
     flex: 1 0 auto;
   }
 
+  .container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 40px;
+    
+  }
+
   .icon{
     height: 65px;
     width: 65px;
@@ -49,4 +57,9 @@
         width: 100%;
         color: white;
     }
+  }
+  
+  .header-centered {
+    display: grid;
+    place-items: center;
   }

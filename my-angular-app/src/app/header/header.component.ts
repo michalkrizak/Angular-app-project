@@ -6,6 +6,7 @@ import { SearcBarComponent } from '../searc-bar/searc-bar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CartComponent } from '../cart/cart.component';
 import { MatIcon } from '@angular/material/icon';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -18,15 +19,25 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {} 
 
   @Input() user: any = null;
   @Input() products: any = null;
-
+  isCategoryMenuOpen: boolean = false;
   ngOnInit() {
     console.log('User:', this.user);
     console.log('Products:', this.products);
+  }
+
+  toggleCategoryMenu(): void {
+    this.isCategoryMenuOpen = !this.isCategoryMenuOpen;
+  }
+
+  selectCategory(category: string): void {
+    console.log('Selected category:', category);
+    this.isCategoryMenuOpen = false; // Zavře menu po výběru
   }
 
   ToCart(): void {
@@ -37,5 +48,10 @@ export class HeaderComponent implements OnInit {
       height: '950px',
       maxHeight: '950px'
     });
+  }
+
+  logout(): void {
+    this.authService.logout(); // Odhlášení uživatele
+    this.router.navigate(['']); // Přesměrování na přihlašovací stránku
   }
 }
