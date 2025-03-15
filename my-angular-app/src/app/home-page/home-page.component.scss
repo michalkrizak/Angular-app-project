@@ -63,3 +63,58 @@
     display: grid;
     place-items: center;
   }
+
+  .text {
+    &-welcome{
+      display: grid;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: white;
+    }
+    &-first-line {
+      display: grid;
+      justify-items: center;
+    }
+  }
+
+  .ToShop-button {
+    background: black;
+    color: rgb(255, 255, 255) !important;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    width: 200px;
+  }
+
+
+  .ToShop-button:hover {
+    background: #ff9500;
+    color: rgb(255, 255, 255) !important;
+  }
+
+  @media screen and (max-width: 1000px) {
+    .text {
+      &-welcome{
+        font-size: 25px;
+      }
+
+    }
+  }
+
+  @media screen and (max-width: 670px) {
+    .text {
+      &-welcome{
+        font-size: 20px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 453px) {
+    .text {
+      &-welcome{
+        font-size: 15px;
+      }
+    }
+  }

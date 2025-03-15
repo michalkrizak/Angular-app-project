@@ -13,10 +13,12 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { SideNavComponent } from '../components/side-nav/side-nav.component';
 import { HeaderComponent } from '../header/header.component';
+import { ProductComponent } from '../products/product/product.component';
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [HeaderComponent, SearcBarComponent, SideNavComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule ,CommonModule, FormsModule, SearcBarComponent, LogoutButtonComponent ],
+  imports: [ProductDetailComponent, HeaderComponent, SearcBarComponent, SideNavComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, CommonModule, FormsModule, SearcBarComponent, LogoutButtonComponent, ProductDetailComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
@@ -30,5 +32,9 @@ export class HomePageComponent {
 
   ToCart(): void {
     this.router.navigate(['cart']);
+  }
+
+  ToShop(): void {
+    this.router.navigate(['products']);
   }
 }

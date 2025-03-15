@@ -38,7 +38,10 @@
     display: flex;
     flex-direction: row;
     padding-left: 40px;
-  }
+    }
+    &-buttons {
+      display: flex;
+    }
   }
 
   
@@ -87,6 +90,11 @@
     background: #f0f0f0;
   }
 
+  .first-block {
+    display: flex;
+    width: 100%;
+  }
+
   @media screen and (max-width: 1000px) {
     .category-button {
       display: none;
@@ -99,20 +107,28 @@
       color: #ffffff !important;
       font-size: x-large;
       display: flex;
-      flex-direction: column !important;
-      padding-left: 40px;
+      //flex-direction: column !important;
+      padding-left: 0px;
     }
     
-  }
+    .icon-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
 
-  @media screen and (max-width: 830px) {
     .container {
       height: 100%;
       display: grid;
       justify-content:space-evenly;
       display: flex;
-      flex-direction: rox;
+      flex-direction: column-reverse;
       flex-wrap: wrap;
     }
-    
+  }
+
+  @media screen and (max-width: 440px) {
+    .first-block {
+      width: 400px;
+    }
+
   }

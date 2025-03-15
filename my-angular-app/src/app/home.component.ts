@@ -13,6 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AuthService, IUser } from './services/auth.service';
+import { ApiService } from './services/api-service';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class HomeComponent {
   constructor(
     private router: Router, 
     private fakeStoreService: FakeStoreService,
+    private apiService: ApiService,  // Pokud chceš použít API, vytvoř nový service a přidej ho do importsu
     private authService: AuthService
   ) {}
 
@@ -52,9 +54,9 @@ export class HomeComponent {
   }
 
   login(): void {
-    this.fakeStoreService.login(this.username, this.password).subscribe((success: any) => {
+    this.apiService.login(this.username, this.password).subscribe((success: any) => {
       if (success) {
-        const user = this.fakeStoreService.getLoggedInUser();
+        const user = this.apiService.getLoggedInUser();
         this.authService.setLoggedInUser(user); // Uložení uživatele do localStorage
         console.warn('Přihlášení:', user);
         this.loggedInUser = user; // Nastavení lokální proměnné
@@ -71,7 +73,7 @@ export class HomeComponent {
     this.loggedInUser = null;
   }
 
-  navigateToProduct(): void {
-    this.router.navigate(['/products']);
+  navigateToHomePage(): void {
+    this.router.navigate(['/home-page']);
   }
 }

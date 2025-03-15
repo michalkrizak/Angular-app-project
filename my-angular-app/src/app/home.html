@@ -4,7 +4,7 @@
     <div *ngIf="loggedInUser; else loginForm">
       <p>Přihlášen jako: {{ loggedInUser?.username }}</p>
       <button (click)="logout()">Odhlásit</button>
-      <button (click)="navigateToProduct()">Produkty</button>
+      <button (click)="navigateToHomePage()">Produkty</button>
     </div>
 
     <ng-template #loginForm class="form">

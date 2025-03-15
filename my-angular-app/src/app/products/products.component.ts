@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { HeaderComponent } from '../header/header.component';
 import { CartService } from '../services/cart-service';
 import { ApiService, IProduct } from '../services/api-service';
+import { SideNavComponent } from '../components/side-nav/side-nav.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +23,10 @@ import { ApiService, IProduct } from '../services/api-service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CartService, CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule],
+  imports: [MatIcon, SideNavComponent, CartService, CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule],
 })
 export class ProductsComponent implements OnInit {
+  @ViewChild(SideNavComponent) sidenavComponent!: SideNavComponent;
   @Input() products: IProduct[] = [];
   @Input() user: any = null;
   searchResults: IProduct[] = [];
@@ -79,5 +82,9 @@ export class ProductsComponent implements OnInit {
 
   goToProductDetail(productId: number): void {
     this.router.navigate(['/product', productId]);
+  }
+
+  openSidenav() {
+    this.sidenavComponent.toggleSidenav();
   }
 }

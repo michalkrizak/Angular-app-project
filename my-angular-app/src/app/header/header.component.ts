@@ -43,10 +43,10 @@ export class HeaderComponent implements OnInit {
   ToCart(): void {
     //this.router.navigate(['../cart']);
     this.dialog.open(CartComponent, {
-      width: '1900px', // Use viewport width units instead of pixels
-      maxWidth: '1900px', // Override default max width
-      height: '950px',
-      maxHeight: '950px'
+      width: '95%', // Use viewport width units instead of pixels
+      maxWidth: '110%', // Override default max width
+      height: '95%',
+      maxHeight: '110%'
     });
   }
 

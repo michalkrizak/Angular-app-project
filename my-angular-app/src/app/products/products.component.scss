@@ -1,3 +1,7 @@
+.background {
+    background-color: #c7ad2b;
+  }
+
 .products {
     text-align: center;
   
@@ -139,5 +143,22 @@ mat-slider {
 
   .description {
     max-width: 90%;
+  }
+}
+
+.header-centered {
+  display: grid;
+  place-items: center;
+}
+
+.icon{
+  height: 65px;
+  width: 65px;
+  &-item{
+      font-size: xxx-large;
+      font-weight: bold;
+      height: 100%;
+      width: 100%;
+      color: white;
   }
 }
