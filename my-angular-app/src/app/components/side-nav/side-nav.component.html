@@ -1,0 +1,28 @@
+
+
+<div class="example-container" [class.example-is-mobile]="isMobile()">
+    <!-- <mat-toolbar class="example-toolbar">
+        <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+        <h1 class="example-app-name">Responsive App</h1>
+    </mat-toolbar> -->
+
+    <mat-sidenav-container class="example-sidenav-container"
+                            [style.marginTop.px]="isMobile() ? 56 : 0">
+        <mat-sidenav #snav [mode]="'over'" class="side-nav">
+        <mat-nav-list class="side-nav">
+            <span class="close-container">
+               <button mat-icon-button (click)="snav.toggle()"><mat-icon class="close-icon">close</mat-icon></button>
+            </span>
+            <a mat-list-item class="side-nav-button"><span class="side-nav-item">Menu</span></a>
+            <a mat-list-item class="side-nav-button"><span class="side-nav-item">Menu</span></a>
+            <a mat-list-item class="side-nav-button"><span class="side-nav-item">Menu</span></a>
+        </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+           <!--  <button mat-icon-button (click)="snav.toggle()"><mat-icon >menu</mat-icon></button> -->
+            <ng-content></ng-content>
+
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

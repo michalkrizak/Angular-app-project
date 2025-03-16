@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { HeaderComponent } from '../header/header.component';
 import { ProductComponent } from '../products/product/product.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Injectable({
   providedIn: 'root', // Zajišťuje, že služba je dostupná globálně
@@ -18,7 +19,7 @@ import { ProductComponent } from '../products/product/product.component';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
+  imports: [MatIconModule, CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
   templateUrl: './searc-bar.component.html',
   styleUrl: './searc-bar.component.scss'
 })

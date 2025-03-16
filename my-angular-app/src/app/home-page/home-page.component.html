@@ -1,0 +1,39 @@
+<app-side-nav>
+    
+<div class="bgimage"></div>
+    <div class="header container">
+
+    <!-- <button class="icon" mat-icon-button (click)="openSidenav()">
+        <mat-icon class="icon-item">menu</mat-icon>
+    </button> -->
+
+
+        <app-header>
+            <span class="header-centered">
+            <button class="icon" mat-icon-button (click)="openSidenav()">
+                <mat-icon class="icon-item">menu</mat-icon>
+            </button></span>
+        </app-header>
+
+    </div>    
+       <div class="container-welcome">
+    <div class="text-welcome">
+        <span>
+           <h1 class="text-first-line">ZAČNĚTE</h1> 
+        </span>
+        <span>
+           <h1>S VAŠIM NAKUPOVÁNÍM</h1> 
+        </span>
+        <span class="header-centered">
+            <button mat-button class="ToShop-button" (click)="ToShop()">
+                Do Obchodu
+            </button>
+        </span>
+    </div>    
+</div>
+    <div class="product-list">
+        <div *ngFor="let product of products">
+            <app-product-detail  [product]="product" ></app-product-detail>
+        </div>
+    </div>
+</app-side-nav>
