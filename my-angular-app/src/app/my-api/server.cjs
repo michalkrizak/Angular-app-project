@@ -36,7 +36,20 @@ const saveFile = (fileName, data) => {
 const productsFile = "products.json";
 
 app.get("/products", (req, res) => {
-  res.json(loadFile(productsFile));
+  const products = loadFile(productsFile);
+  
+  // Načti parametry z requestu
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+
+  // Výpočet indexu pro stránkování
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  // Vyber jen část dat odpovídající dané stránce
+  const paginatedProducts = products.slice(startIndex, endIndex);
+
+  res.json(paginatedProducts);
 });
 
 app.get("/products/:id", (req, res) => {

@@ -44,7 +44,7 @@ export class HomePageComponent {
   products: IProduct[] = [];
   user: any = null;
   page: number = 0;  // Aktuální stránka
-  pageSize: number = 3;  // Počet produktů na stránku
+  pageSize: number = 10;  // Počet produktů na stránku
   isLoading: boolean = false;
   hasMoreProducts: boolean = true; 
 
