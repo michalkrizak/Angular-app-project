@@ -89,4 +89,7 @@ export class ApiService {
     this.loggedInUser = null;
   }
 
+  getAllProductsPage(page: number, pageSize: number): Observable<IProduct[]> {
+    return this.http.get<IProduct[]>(`${this.apiUrl}/products?page=${page}&pageSize=${pageSize}`);
+  }
 }

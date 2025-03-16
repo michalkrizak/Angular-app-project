@@ -23,10 +23,14 @@ import { MatSliderModule } from '@angular/material/slider';
 import { CartService } from '../services/cart-service';
 import { ApiService, IProduct } from '../services/api-service';
 import { MatIcon } from '@angular/material/icon';
+import { filter, map } from 'rxjs/operators';
+import { BrowserModule } from '@angular/platform-browser';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';  // ✅ Přidat import
+
 
 @Component({
   selector: 'app-home-page',
-  imports: [ProductDetailComponent, HeaderComponent, SideNavComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, CommonModule, FormsModule, ProductDetailComponent, MatProgressSpinnerModule, MatSliderModule, MatIcon],
+  imports: [InfiniteScrollModule, ProductDetailComponent, HeaderComponent, SideNavComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, CommonModule, FormsModule, ProductDetailComponent, MatProgressSpinnerModule, MatSliderModule, MatIcon],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
@@ -39,10 +43,14 @@ export class HomePageComponent {
 
   products: IProduct[] = [];
   user: any = null;
+  page: number = 0;  // Aktuální stránka
+  pageSize: number = 3;  // Počet produktů na stránku
+  isLoading: boolean = false;
+  hasMoreProducts: boolean = true; 
 
   ngOnInit(): void {
     // Použití nového API
-    this.apiService.getAllProducts().subscribe({
+    /*this.apiService.getAllProducts().subscribe({
       next: (data) => {
         this.products = data;
         console.log(data);
@@ -50,15 +58,32 @@ export class HomePageComponent {
       error: (error) => {
         console.error('Error fetching products:', error);
       }
-    });
-
-    this.authService.user$.subscribe((user) => {
-      this.user = user;
-      console.log('Current user:', user);
-    });
+    });*/
+    this.loadMoreProducts();
   }
 
+  loadMoreProducts(): void {
+    if (this.isLoading || !this.hasMoreProducts) {
+      return;  // Pokud už se načítá nebo nejsou další produkty, nic nedělej
+    }
 
+    this.isLoading = true;
+
+    this.apiService.getAllProductsPage(this.page, this.pageSize).subscribe({
+      next: (data) => {
+        if (data.length < this.pageSize) {
+          this.hasMoreProducts = false;  // Už nejsou další produkty
+        }
+
+        this.products = [...this.products, ...data];  // Přidání nových produktů
+        this.page++;  // Zvýšení stránky
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
   openSidenav() {
     this.sidenavComponent.toggleSidenav();
   }

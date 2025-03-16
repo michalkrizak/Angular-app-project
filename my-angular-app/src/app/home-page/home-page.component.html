@@ -31,9 +31,29 @@
         </span>
     </div>    
 </div>
-    <div class="product-list">
+<!-- <div class="product-list-container">
+     <div class="product-list">
         <div *ngFor="let product of products">
             <app-product-detail  [product]="product" ></app-product-detail>
         </div>
     </div>
+</div> -->
+
+<div class="product-list-container" 
+     infiniteScroll 
+     [infiniteScrollDistance]="1" 
+     [infiniteScrollThrottle]="200" 
+     (scrolled)="loadMoreProducts()">
+  
+  <div class="product-list">
+    <div *ngFor="let product of products">
+      <app-product-detail [product]="product"></app-product-detail>
+    </div>
+  </div>
+
+  <!-- Načítací spinner -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
 </app-side-nav>
