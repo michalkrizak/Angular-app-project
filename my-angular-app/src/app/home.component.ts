@@ -20,7 +20,7 @@ import { ApiService } from './services/api-service';
   selector: 'app-root',
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
-  imports: [RouterOutlet, CommonModule, FormsModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
   standalone: true, // Potvrď, že komponenta je standalone
   changeDetection: ChangeDetectionStrategy.OnPush,
 

@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
-  imports: [MatIcon, LogoutButtonComponent, CommonModule, RouterModule, SearcBarComponent, RouterModule], // Import CommonModule
+  imports: [MatIcon, CommonModule, RouterModule, SearcBarComponent, RouterModule], // Import CommonModule
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

@@ -13,7 +13,7 @@ import { HeaderComponent } from '../../header/header.component';
 import { ProductsComponent } from '../../products/products.component';
 @Component({
   selector: 'app-side-nav',
-  imports: [ProductsComponent, HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule ,CommonModule, FormsModule ],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule ,CommonModule, FormsModule ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss'
 })

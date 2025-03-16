@@ -162,3 +162,13 @@ mat-slider {
       color: white;
   }
 }
+
+.product-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}

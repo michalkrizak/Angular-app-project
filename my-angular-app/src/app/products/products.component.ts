@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ProductComponent } from "./product/product.component";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../services/auth.service';
 import { LogoutButtonComponent } from '../logout-button/logout-button.component';
@@ -14,6 +13,7 @@ import { CartService } from '../services/cart-service';
 import { ApiService, IProduct } from '../services/api-service';
 import { SideNavComponent } from '../components/side-nav/side-nav.component';
 import { MatIcon } from '@angular/material/icon';
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ import { MatIcon } from '@angular/material/icon';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [MatIcon, SideNavComponent, CartService, CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule],
+  imports: [MatIcon, SideNavComponent, CartService, CommonModule, RouterModule, ProductDetailComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule],
 })
 export class ProductsComponent implements OnInit {
   @ViewChild(SideNavComponent) sidenavComponent!: SideNavComponent;

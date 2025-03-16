@@ -10,7 +10,7 @@ import { LogoutButtonComponent } from '../logout-button/logout-button.component'
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { HeaderComponent } from '../header/header.component';
-import { ProductComponent } from '../products/product/product.component';
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @Injectable({
@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [MatIconModule, CommonModule, RouterModule, ProductComponent, LogoutButtonComponent, HeaderComponent, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
+  imports: [MatIconModule, CommonModule, RouterModule, MatProgressSpinnerModule, FormsModule, MatSliderModule], // Import CommonModule
   templateUrl: './searc-bar.component.html',
   styleUrl: './searc-bar.component.scss'
 })

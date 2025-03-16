@@ -13,7 +13,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { SideNavComponent } from '../components/side-nav/side-nav.component';
 import { HeaderComponent } from '../header/header.component';
-import { ProductComponent } from '../products/product/product.component';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { Input, OnInit,  } from '@angular/core';
 import { Injectable } from '@angular/core';
@@ -27,7 +26,7 @@ import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home-page',
-  imports: [ProductDetailComponent, HeaderComponent, SearcBarComponent, SideNavComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, CommonModule, FormsModule, SearcBarComponent, LogoutButtonComponent, ProductDetailComponent, ProductComponent, MatProgressSpinnerModule, MatSliderModule, MatIcon],
+  imports: [ProductDetailComponent, HeaderComponent, SideNavComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, CommonModule, FormsModule, ProductDetailComponent, MatProgressSpinnerModule, MatSliderModule, MatIcon],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
