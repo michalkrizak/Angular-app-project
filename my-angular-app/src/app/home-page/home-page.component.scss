@@ -1,6 +1,7 @@
 .bgimage {
     background: url('/assets/banner-bg.png') no-repeat center center;
     height: 80%;
+    max-height: 550px;
     width: 100%;
     background-size: cover;
     position: absolute;
@@ -92,6 +93,20 @@
   .ToShop-button:hover {
     background: #ff9500;
     color: rgb(255, 255, 255) !important;
+  }
+
+  .product-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .container-welcome{
+    height: 380px;
   }
 
   @media screen and (max-width: 1000px) {
